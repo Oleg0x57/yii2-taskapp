@@ -64,4 +64,34 @@ class Task extends \yii\db\ActiveRecord
             'status' => 'Статус',
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public function stop()
+    {
+        $this->status = self::STATUS_WAIT;
+        $this->duration += time() - strtotime($this->date_start);
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function start()
+    {
+        $this->status = self::STATUS_PROCESS;
+        $this->date_start = date('Y-m-d H:i:s');
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function finish()
+    {
+        $this->status = self::STATUS_FINISH;
+        $this->date_finish = date('Y-m-d H:i:s');
+        return $this->save();
+    }
 }

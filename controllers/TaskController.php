@@ -81,10 +81,12 @@ class TaskController extends Controller
      */
     public function actionStart($id)
     {
+        $activeTasks = Task::findAll(['status' => Task::STATUS_PROCESS]);
+        foreach($activeTasks as $task){
+            $task->stop();
+        }
         $model = $this->findModel($id);
-        $model->status = Task::STATUS_PROCESS;
-        $model->date_start = date('Y-m-d H:i:s');
-        $model->save();
+        $model->start();
         return $this->redirect(['index']);
     }
 
@@ -96,9 +98,7 @@ class TaskController extends Controller
     public function actionStop($id)
     {
         $model = $this->findModel($id);
-        $model->status = Task::STATUS_WAIT;
-        $model->duration += time() - strtotime($model->date_start);
-        $model->save();
+        $model->stop();
         return $this->redirect(['index']);
     }
 
@@ -110,8 +110,7 @@ class TaskController extends Controller
     public function actionFinish($id)
     {
         $model = $this->findModel($id);
-        $model->status = Task::STATUS_FINISH;
-        $model->save();
+        $model->finish();
         return $this->redirect(['index']);
     }
 
