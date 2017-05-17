@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Task;
 use app\models\TaskSearch;
+use app\models\TaskComment;
+use app\models\TaskCommentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -45,14 +47,27 @@ class TaskController extends Controller
     }
 
     /**
-     * Displays a single Task model.
+     * Displays a single Task model with related Comments.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
+        $task = $this->findModel($id);
+        $newComment = new TaskComment();
+        $newComment->task_id = $id;
+        $commentSearchModel = new TaskCommentSearch();
+        $commentSearchModel->task_id = $id;
+        $commentDataProvider = $commentSearchModel->search(Yii::$app->request->queryParams);
+        if ($newComment->load(Yii::$app->request->post()) && $newComment->save()) {
+            $newComment = new TaskComment();
+            $newComment->task_id = $id;
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'task' => $task,
+            'newComment' => $newComment,
+            'commentSearchModel' => $commentSearchModel,
+            'commentDataProvider' => $commentDataProvider,
         ]);
     }
 
@@ -82,7 +97,7 @@ class TaskController extends Controller
     public function actionStart($id)
     {
         $activeTasks = Task::findAll(['status' => Task::STATUS_PROCESS]);
-        foreach($activeTasks as $task){
+        foreach ($activeTasks as $task) {
             $task->stop();
         }
         $model = $this->findModel($id);

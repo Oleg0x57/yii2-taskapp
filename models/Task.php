@@ -14,6 +14,8 @@ use Yii;
  * @property string $date_finish
  * @property integer $duration
  * @property integer $status
+ *
+ * @property TaskComment[] $comments
  */
 class Task extends \yii\db\ActiveRecord
 {
@@ -93,5 +95,14 @@ class Task extends \yii\db\ActiveRecord
         $this->status = self::STATUS_FINISH;
         $this->date_finish = date('Y-m-d H:i:s');
         return $this->save();
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(TaskComment::className(), ['task_id' => 'id']);
     }
 }

@@ -45,6 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
+                'attribute' => 'comments',
+                'label' => 'Комментарии',
+                'value' => function ($model, $key, $index, $column) {
+                    return count($model->comments);
+                },
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {start} {stop} {finish} {delete}',
                 'buttons' => [
