@@ -54,20 +54,8 @@ class TaskController extends Controller
     public function actionView($id)
     {
         $task = $this->findModel($id);
-        $newComment = new TaskComment();
-        $newComment->task_id = $id;
-        $commentSearchModel = new TaskCommentSearch();
-        $commentSearchModel->task_id = $id;
-        $commentDataProvider = $commentSearchModel->search(Yii::$app->request->queryParams);
-        if ($newComment->load(Yii::$app->request->post()) && $newComment->save()) {
-            $newComment = new TaskComment();
-            $newComment->task_id = $id;
-        }
         return $this->render('view', [
             'task' => $task,
-            'newComment' => $newComment,
-            'commentSearchModel' => $commentSearchModel,
-            'commentDataProvider' => $commentDataProvider,
         ]);
     }
 
