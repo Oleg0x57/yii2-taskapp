@@ -37,6 +37,7 @@ $this->beginPage();
         ]);
 
         $menuItems = [
+            ['label' => Yii::t('app', 'Blog'), 'url' => ['/post/']],
             ['label' => Yii::t('app', 'Gii'), 'url' => ['/gii/']],
         ];
 

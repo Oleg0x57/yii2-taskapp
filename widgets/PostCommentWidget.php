@@ -4,24 +4,24 @@ namespace app\widgets;
 
 use Yii;
 use yii\base\Widget;
-use app\models\Task;
-use app\models\TaskComment;
-use app\models\TaskCommentSearch;
+use app\models\Post;
+use app\models\PostComment;
+use app\models\PostCommentSearch;
 
-class TaskCommentWidget extends Widget
+class PostCommentWidget extends Widget
 {
     protected $params = [];
 
-    public function __construct(Task $task)
+    public function __construct(Post $post)
     {
-        $newComment = new TaskComment();
-        $newComment->task_id = $task->id;
-        $commentSearchModel = new TaskCommentSearch();
-        $commentSearchModel->task_id = $task->id;
+        $newComment = new PostComment();
+        $newComment->post_id = $post->id;
+        $commentSearchModel = new PostCommentSearch();
+        $commentSearchModel->post_id = $post->id;
         $commentDataProvider = $commentSearchModel->search(Yii::$app->request->queryParams);
         if ($newComment->load(Yii::$app->request->post()) && $newComment->save()) {
-            $newComment = new TaskComment();
-            $newComment->task_id = $task->id;
+            $newComment = new PostComment();
+            $newComment->post_id = $post->id;
         }
         $this->params = [
             'newComment' => $newComment,
@@ -32,6 +32,6 @@ class TaskCommentWidget extends Widget
 
     public function run()
     {
-        return $this->render('task-comments', $this->params);
+        return $this->render('post-comments', $this->params);
     }
 }
