@@ -15,7 +15,7 @@ use Yii;
  *
  * @property PostComment[] $comments
  */
-class Post extends \yii\db\ActiveRecord
+class Post extends \yii\db\ActiveRecord implements CommentableInterface
 {
     const STATUS_DRAFT = 0;
     const STATUS_PUBLISHED = 1;
@@ -76,5 +76,13 @@ class Post extends \yii\db\ActiveRecord
     public function getComments()
     {
         return $this->hasMany(PostComment::className(), ['post_id' => 'id']);
+    }
+
+    /**
+     * @param $comment
+     */
+    public function addComment($comment)
+    {
+        $this->link('comments', $comment);
     }
 }

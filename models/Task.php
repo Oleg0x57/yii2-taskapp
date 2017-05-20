@@ -17,7 +17,7 @@ use Yii;
  *
  * @property TaskComment[] $comments
  */
-class Task extends \yii\db\ActiveRecord
+class Task extends \yii\db\ActiveRecord implements CommentableInterface
 {
     const STATUS_WAIT = 0;
     const STATUS_PROCESS = 1;
@@ -104,5 +104,13 @@ class Task extends \yii\db\ActiveRecord
     public function getComments()
     {
         return $this->hasMany(TaskComment::className(), ['task_id' => 'id']);
+    }
+
+    /**
+     * @param $comment
+     */
+    public function addComment($comment)
+    {
+        $this->link('comments', $comment);
     }
 }
