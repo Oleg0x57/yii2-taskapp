@@ -13,6 +13,14 @@ use app\models\PostComment;
 class PostCommentSearch extends PostComment implements CommentSearchInterface
 {
     /**
+     * @param CommentableInterface $commentable
+     */
+    public function __construct(CommentableInterface $commentable){
+        parent::__construct();
+        $this->task_id = $commentable->getId();
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()

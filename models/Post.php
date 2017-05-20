@@ -85,4 +85,12 @@ class Post extends \yii\db\ActiveRecord implements CommentableInterface
     {
         $this->link('comments', $comment);
     }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

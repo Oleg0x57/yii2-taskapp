@@ -27,8 +27,7 @@ class TaskCommentWidget extends Widget implements CommentWidgetInterface
     public function __construct(Task $task)
     {
         $newComment = new TaskComment();
-        $commentSearchModel = new TaskCommentSearch();
-        $commentSearchModel->task_id = $task->id;
+        $commentSearchModel = new TaskCommentSearch($task);
         $commentDataProvider = $commentSearchModel->search(Yii::$app->request->queryParams);
         if ($newComment->load(Yii::$app->request->post()) && $task->addComment($newComment)) {
             $newComment = new TaskComment();

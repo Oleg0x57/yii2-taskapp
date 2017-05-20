@@ -27,8 +27,7 @@ class PostCommentWidget extends Widget implements CommentWidgetInterface
     public function __construct(Post $post)
     {
         $newComment = new PostComment();
-        $commentSearchModel = new PostCommentSearch();
-        $commentSearchModel->post_id = $post->id;
+        $commentSearchModel = new PostCommentSearch($post);
         $commentDataProvider = $commentSearchModel->search(Yii::$app->request->queryParams);
         if ($newComment->load(Yii::$app->request->post()) && $post->addComment($newComment)) {
             $newComment = new PostComment();
