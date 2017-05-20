@@ -14,7 +14,7 @@ use Yii;
  *
  * @property Task $task
  */
-class TaskComment extends \yii\db\ActiveRecord
+class TaskComment extends \yii\db\ActiveRecord implements CommentInterface
 {
     /**
      * @inheritdoc

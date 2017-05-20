@@ -10,7 +10,7 @@ use app\models\PostComment;
 /**
  * PostCommentSearch represents the model behind the search form about `app\models\PostComment`.
  */
-class PostCommentSearch extends PostComment
+class PostCommentSearch extends PostComment implements CommentSearchInterface
 {
     /**
      * @inheritdoc

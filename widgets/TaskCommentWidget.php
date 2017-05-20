@@ -2,13 +2,14 @@
 
 namespace app\widgets;
 
+use app\models\CommentWidgetInterface;
 use Yii;
 use yii\base\Widget;
 use app\models\Task;
 use app\models\TaskComment;
 use app\models\TaskCommentSearch;
 
-class TaskCommentWidget extends Widget
+class TaskCommentWidget extends Widget implements CommentWidgetInterface
 {
     /**
      * @var string

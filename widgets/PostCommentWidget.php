@@ -2,13 +2,14 @@
 
 namespace app\widgets;
 
+use app\models\CommentWidgetInterface;
 use Yii;
 use yii\base\Widget;
 use app\models\Post;
 use app\models\PostComment;
 use app\models\PostCommentSearch;
 
-class PostCommentWidget extends Widget
+class PostCommentWidget extends Widget implements CommentWidgetInterface
 {
     /**
      * @var string

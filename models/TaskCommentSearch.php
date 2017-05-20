@@ -10,7 +10,7 @@ use app\models\TaskComment;
 /**
  * TaskCommentSearch represents the model behind the search form about `app\models\TaskComment`.
  */
-class TaskCommentSearch extends TaskComment
+class TaskCommentSearch extends TaskComment implements CommentSearchInterface
 {
     /**
      * @inheritdoc

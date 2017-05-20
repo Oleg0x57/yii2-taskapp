@@ -15,7 +15,7 @@ use Yii;
  *
  * @property Post $post
  */
-class PostComment extends \yii\db\ActiveRecord
+class PostComment extends \yii\db\ActiveRecord implements CommentInterface
 {
     const STATUS_DRAFT = 0;
     const STATUS_MODERATED = 1;
