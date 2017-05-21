@@ -3,6 +3,7 @@
 namespace app\models;
 
 
-interface CommentWidgetInterface {
-
+interface CommentWidgetInterface
+{
+    public function run();
 }
