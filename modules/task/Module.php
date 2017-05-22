@@ -1,11 +1,12 @@
 <?php
 
 namespace app\modules\task;
+use yii\base\BootstrapInterface;
 
 /**
  * task module definition class
  */
-class Module extends \yii\base\Module
+class Module extends \yii\base\Module implements BootstrapInterface
 {
     /**
      * @inheritdoc
