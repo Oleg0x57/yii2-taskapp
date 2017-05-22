@@ -2,8 +2,6 @@
 
 namespace app\widgets;
 
-use app\models\PostComment;
-use app\models\PostCommentSearch;
 use Yii;
 use yii\base\Widget;
 use app\models\CommentInterface;
