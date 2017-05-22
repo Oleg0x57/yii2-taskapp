@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\modules\task\models;
 
 use Yii;
+use app\models\CommentInterface;
 
 /**
  * This is the model class for table "task_comment".

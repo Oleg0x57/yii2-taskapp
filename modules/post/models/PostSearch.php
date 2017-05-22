@@ -1,34 +1,25 @@
 <?php
 
-namespace app\models;
+namespace app\modules\post\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PostComment;
+use app\modules\post\models\Post;
 
 /**
- * PostCommentSearch represents the model behind the search form about `app\models\PostComment`.
+ * PostSearch represents the model behind the search form about `app\models\Post`.
  */
-class PostCommentSearch extends PostComment implements CommentSearchInterface
+class PostSearch extends Post
 {
-    /**
-     * @param CommentableInterface $commentable
-     */
-    public function __construct(CommentableInterface $commentable)
-    {
-        parent::__construct();
-        $this->post_id = $commentable->getId();
-    }
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'post_id', 'status'], 'integer'],
-            [['message', 'date'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['title', 'text', 'date'], 'safe'],
         ];
     }
 
@@ -50,7 +41,7 @@ class PostCommentSearch extends PostComment implements CommentSearchInterface
      */
     public function search($params)
     {
-        $query = PostComment::find();
+        $query = Post::find();
 
         // add conditions that should always apply here
 
@@ -70,11 +61,11 @@ class PostCommentSearch extends PostComment implements CommentSearchInterface
         $query->andFilterWhere([
             'id' => $this->id,
             'date' => $this->date,
-            'post_id' => $this->post_id,
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'message', $this->message]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'text', $this->text]);
 
         return $dataProvider;
     }

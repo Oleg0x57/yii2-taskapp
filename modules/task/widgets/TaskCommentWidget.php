@@ -1,13 +1,13 @@
 <?php
 
-namespace app\widgets;
+namespace app\modules\task\widgets;
 
-use app\models\CommentWidgetInterface;
 use Yii;
 use yii\base\Widget;
 use app\models\CommentInterface;
 use app\models\CommentableInterface;
 use app\models\CommentSearchInterface;
+use app\models\CommentWidgetInterface;
 
 class TaskCommentWidget extends Widget implements CommentWidgetInterface
 {

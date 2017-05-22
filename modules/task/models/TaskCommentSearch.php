@@ -1,25 +1,35 @@
 <?php
 
-namespace app\models;
+namespace app\modules\task\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Task;
+use app\modules\task\models\TaskComment;
+use app\models\CommentSearchInterface;
+use app\models\CommentableInterface;
 
 /**
- * TaskSearch represents the model behind the search form about `app\models\Task`.
+ * TaskCommentSearch represents the model behind the search form about `app\models\TaskComment`.
  */
-class TaskSearch extends Task
+class TaskCommentSearch extends TaskComment implements CommentSearchInterface
 {
+    /**
+     * @param CommentableInterface $commentable
+     */
+    public function __construct(CommentableInterface $commentable){
+        parent::__construct();
+        $this->task_id = $commentable->getId();
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'duration', 'status'], 'integer'],
-            [['title', 'description', 'date_start', 'date_finish'], 'safe'],
+            [['id', 'task_id'], 'integer'],
+            [['message', 'date'], 'safe'],
         ];
     }
 
@@ -41,7 +51,7 @@ class TaskSearch extends Task
      */
     public function search($params)
     {
-        $query = Task::find();
+        $query = TaskComment::find();
 
         // add conditions that should always apply here
 
@@ -60,14 +70,11 @@ class TaskSearch extends Task
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'date_start' => $this->date_start,
-            'date_finish' => $this->date_finish,
-            'duration' => $this->duration,
-            'status' => $this->status,
+            'date' => $this->date,
+            'task_id' => $this->task_id,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'message', $this->message]);
 
         return $dataProvider;
     }

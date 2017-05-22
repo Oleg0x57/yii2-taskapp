@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\modules\post\models;
 
+use app\models\CommentInterface;
 use Yii;
 
 /**

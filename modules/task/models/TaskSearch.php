@@ -1,33 +1,25 @@
 <?php
 
-namespace app\models;
+namespace app\modules\task\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\TaskComment;
+use app\modules\task\models\Task;
 
 /**
- * TaskCommentSearch represents the model behind the search form about `app\models\TaskComment`.
+ * TaskSearch represents the model behind the search form about `app\models\Task`.
  */
-class TaskCommentSearch extends TaskComment implements CommentSearchInterface
+class TaskSearch extends Task
 {
-    /**
-     * @param CommentableInterface $commentable
-     */
-    public function __construct(CommentableInterface $commentable){
-        parent::__construct();
-        $this->task_id = $commentable->getId();
-    }
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'task_id'], 'integer'],
-            [['message', 'date'], 'safe'],
+            [['id', 'duration', 'status'], 'integer'],
+            [['title', 'description', 'date_start', 'date_finish'], 'safe'],
         ];
     }
 
@@ -49,7 +41,7 @@ class TaskCommentSearch extends TaskComment implements CommentSearchInterface
      */
     public function search($params)
     {
-        $query = TaskComment::find();
+        $query = Task::find();
 
         // add conditions that should always apply here
 
@@ -68,11 +60,14 @@ class TaskCommentSearch extends TaskComment implements CommentSearchInterface
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'date' => $this->date,
-            'task_id' => $this->task_id,
+            'date_start' => $this->date_start,
+            'date_finish' => $this->date_finish,
+            'duration' => $this->duration,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'message', $this->message]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

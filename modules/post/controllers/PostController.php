@@ -1,24 +1,24 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\post\controllers;
 
 use Yii;
-use app\models\Task;
-use app\models\TaskSearch;
+use app\modules\post\models\Post;
+use app\modules\post\models\PostSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\modules\post\models\PostComment;
+use app\modules\post\models\PostCommentSearch;
+use app\modules\post\widgets\PostCommentWidget;
 use app\models\CommentInterface;
 use app\models\CommentSearchInterface;
 use app\models\CommentWidgetInterface;
-use app\models\TaskComment;
-use app\models\TaskCommentSearch;
-use app\widgets\TaskCommentWidget;
 
 /**
- * TaskController implements the CRUD actions for Task model.
+ * PostController implements the CRUD actions for Post model.
  */
-class TaskController extends Controller
+class PostController extends Controller
 {
     /**
      * TODO: move DiC into bootstrap
@@ -29,9 +29,9 @@ class TaskController extends Controller
     public function beforeAction($action)
     {
         parent::beforeAction($action);
-        Yii::$container->set(CommentInterface::class, TaskComment::class);
-        Yii::$container->set(CommentSearchInterface::class, TaskCommentSearch::class);
-        Yii::$container->set(CommentWidgetInterface::class, TaskCommentWidget::class);
+        Yii::$container->set(CommentInterface::class, PostComment::class);
+        Yii::$container->set(CommentSearchInterface::class, PostCommentSearch::class);
+        Yii::$container->set(CommentWidgetInterface::class, PostCommentWidget::class);
         return true;
     }
 
@@ -51,12 +51,12 @@ class TaskController extends Controller
     }
 
     /**
-     * Lists all Task models.
+     * Lists all Post models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TaskSearch();
+        $searchModel = new PostSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -66,26 +66,25 @@ class TaskController extends Controller
     }
 
     /**
-     * Displays a single Task model with related Comments.
+     * Displays a single Post model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $task = $this->findModel($id);
         return $this->render('view', [
-            'task' => $task,
+            'post' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Task model.
+     * Creates a new Post model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Task();
+        $model = new Post();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -97,48 +96,7 @@ class TaskController extends Controller
     }
 
     /**
-     * @param integer $id
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException
-     */
-    public function actionStart($id)
-    {
-        $activeTasks = Task::findAll(['status' => Task::STATUS_PROCESS]);
-        foreach ($activeTasks as $task) {
-            $task->stop();
-        }
-        $model = $this->findModel($id);
-        $model->start();
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * @param integer $id
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException
-     */
-    public function actionStop($id)
-    {
-        $model = $this->findModel($id);
-        $model->stop();
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * @param integer $id
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException
-     */
-    public function actionFinish($id)
-    {
-        $model = $this->findModel($id);
-        $model->finish();
-        return $this->redirect(['index']);
-    }
-
-
-    /**
-     * Updates an existing Task model.
+     * Updates an existing Post model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -157,7 +115,19 @@ class TaskController extends Controller
     }
 
     /**
-     * Deletes an existing Task model.
+     * @param integer $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionPublish($id)
+    {
+        $model = $this->findModel($id);
+        $model->publish();
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Deletes an existing Post model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -170,15 +140,15 @@ class TaskController extends Controller
     }
 
     /**
-     * Finds the Task model based on its primary key value.
+     * Finds the Post model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Task the loaded model
+     * @return Post the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Task::findOne($id)) !== null) {
+        if (($model = Post::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
