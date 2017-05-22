@@ -5,8 +5,6 @@ namespace app\widgets;
 use app\models\CommentWidgetInterface;
 use Yii;
 use yii\base\Widget;
-use app\models\TaskComment;
-use app\models\TaskCommentSearch;
 use app\models\CommentInterface;
 use app\models\CommentableInterface;
 use app\models\CommentSearchInterface;
@@ -44,11 +42,11 @@ class TaskCommentWidget extends Widget implements CommentWidgetInterface
     public function __construct(CommentableInterface $task)
     {
         $this->task = $task;
-        $this->newComment = new TaskComment();
-        $this->commentSearchModel = new TaskCommentSearch($task);
+        $this->newComment = Yii::$container->get(CommentInterface::class);
+        $this->commentSearchModel = Yii::$container->get(CommentSearchInterface::class, [$task]);
         $commentDataProvider = $this->commentSearchModel->search(Yii::$app->request->queryParams);
         if ($this->newComment->load(Yii::$app->request->post()) && $this->task->addComment($this->newComment)) {
-            $this->newComment = new TaskComment();
+            $this->newComment = Yii::$container->get(CommentInterface::class);
         }
         $this->params = [
             'newComment' => $this->newComment,

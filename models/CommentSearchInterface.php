@@ -3,6 +3,11 @@
 namespace app\models;
 
 
-interface CommentSearchInterface {
-
+interface CommentSearchInterface
+{
+    /**
+     * @param array $params
+     * @return mixed
+     */
+    public function search($params);
 }
