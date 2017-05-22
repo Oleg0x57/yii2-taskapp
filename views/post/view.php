@@ -37,4 +37,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
 
     </div>
-<?php echo (new \app\widgets\PostCommentWidget($post))->run(); ?>
+<?php echo Yii::$container->get(\app\models\CommentWidgetInterface::class, [$post])->run(); ?>

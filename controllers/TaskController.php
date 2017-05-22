@@ -10,8 +10,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\CommentInterface;
 use app\models\CommentSearchInterface;
+use app\models\CommentWidgetInterface;
 use app\models\TaskComment;
 use app\models\TaskCommentSearch;
+use app\widgets\TaskCommentWidget;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -29,6 +31,7 @@ class TaskController extends Controller
         parent::beforeAction($action);
         Yii::$container->set(CommentInterface::class, TaskComment::class);
         Yii::$container->set(CommentSearchInterface::class, TaskCommentSearch::class);
+        Yii::$container->set(CommentWidgetInterface::class, TaskCommentWidget::class);
         return true;
     }
 

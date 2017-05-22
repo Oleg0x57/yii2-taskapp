@@ -10,8 +10,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\PostComment;
 use app\models\PostCommentSearch;
+use app\widgets\PostCommentWidget;
 use app\models\CommentInterface;
 use app\models\CommentSearchInterface;
+use app\models\CommentWidgetInterface;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -29,6 +31,7 @@ class PostController extends Controller
         parent::beforeAction($action);
         Yii::$container->set(CommentInterface::class, PostComment::class);
         Yii::$container->set(CommentSearchInterface::class, PostCommentSearch::class);
+        Yii::$container->set(CommentWidgetInterface::class, PostCommentWidget::class);
         return true;
     }
 
