@@ -2,15 +2,32 @@
 
 namespace app\widgets;
 
-use app\models\CommentWidgetInterface;
 use Yii;
 use yii\base\Widget;
-use app\models\Post;
 use app\models\PostComment;
 use app\models\PostCommentSearch;
+use app\models\CommentInterface;
+use app\models\CommentableInterface;
+use app\models\CommentSearchInterface;
+use app\models\CommentWidgetInterface;
 
 class PostCommentWidget extends Widget implements CommentWidgetInterface
 {
+    /**
+     * @var CommentableInterface
+     */
+    protected $post;
+
+    /**
+     * @var CommentInterface
+     */
+    protected $newComment;
+
+    /**
+     * @var CommentSearchInterface
+     */
+    protected $commentSearchModel;
+
     /**
      * @var string
      */
@@ -22,19 +39,20 @@ class PostCommentWidget extends Widget implements CommentWidgetInterface
     protected $params = [];
 
     /**
-     * @param Post $post
+     * @param CommentableInterface $post
      */
-    public function __construct(Post $post)
+    public function __construct(CommentableInterface $post)
     {
-        $newComment = new PostComment();
-        $commentSearchModel = new PostCommentSearch($post);
-        $commentDataProvider = $commentSearchModel->search(Yii::$app->request->queryParams);
-        if ($newComment->load(Yii::$app->request->post()) && $post->addComment($newComment)) {
-            $newComment = new PostComment();
+        $this->post = $post;
+        $this->newComment = new PostComment();
+        $this->commentSearchModel = new PostCommentSearch($post);
+        $commentDataProvider = $this->commentSearchModel->search(Yii::$app->request->queryParams);
+        if ($this->newComment->load(Yii::$app->request->post()) && $this->post->addComment($this->newComment)) {
+            $this->newComment = new PostComment();
         }
         $this->params = [
-            'newComment' => $newComment,
-            'commentSearchModel' => $commentSearchModel,
+            'newComment' => $this->newComment,
+            'commentSearchModel' => $this->commentSearchModel,
             'commentDataProvider' => $commentDataProvider,
         ];
         $this->view = 'post-comments';

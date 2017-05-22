@@ -5,12 +5,29 @@ namespace app\widgets;
 use app\models\CommentWidgetInterface;
 use Yii;
 use yii\base\Widget;
-use app\models\Task;
 use app\models\TaskComment;
 use app\models\TaskCommentSearch;
+use app\models\CommentInterface;
+use app\models\CommentableInterface;
+use app\models\CommentSearchInterface;
 
 class TaskCommentWidget extends Widget implements CommentWidgetInterface
 {
+    /**
+     * @var CommentableInterface
+     */
+    protected $task;
+
+    /**
+     * @var CommentInterface
+     */
+    protected $newComment;
+
+    /**
+     * @var CommentSearchInterface
+     */
+    protected $commentSearchModel;
+
     /**
      * @var string
      */
@@ -22,19 +39,20 @@ class TaskCommentWidget extends Widget implements CommentWidgetInterface
     protected $params = [];
 
     /**
-     * @param Task $task
+     * @param CommentableInterface $task
      */
-    public function __construct(Task $task)
+    public function __construct(CommentableInterface $task)
     {
-        $newComment = new TaskComment();
-        $commentSearchModel = new TaskCommentSearch($task);
-        $commentDataProvider = $commentSearchModel->search(Yii::$app->request->queryParams);
-        if ($newComment->load(Yii::$app->request->post()) && $task->addComment($newComment)) {
-            $newComment = new TaskComment();
+        $this->task = $task;
+        $this->newComment = new TaskComment();
+        $this->commentSearchModel = new TaskCommentSearch($task);
+        $commentDataProvider = $this->commentSearchModel->search(Yii::$app->request->queryParams);
+        if ($this->newComment->load(Yii::$app->request->post()) && $this->task->addComment($this->newComment)) {
+            $this->newComment = new TaskComment();
         }
         $this->params = [
-            'newComment' => $newComment,
-            'commentSearchModel' => $commentSearchModel,
+            'newComment' => $this->newComment,
+            'commentSearchModel' => $this->commentSearchModel,
             'commentDataProvider' => $commentDataProvider,
         ];
         $this->view = 'task-comments';
