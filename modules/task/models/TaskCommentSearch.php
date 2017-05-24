@@ -6,8 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\task\models\TaskComment;
-use app\models\CommentSearchInterface;
-use app\models\CommentableInterface;
+use app\modules\comment\interfaces\CommentSearchInterface;
+use app\modules\comment\interfaces\CommentableInterface;
 
 /**
  * TaskCommentSearch represents the model behind the search form about `app\models\TaskComment`.

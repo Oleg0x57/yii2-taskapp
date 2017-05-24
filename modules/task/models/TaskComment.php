@@ -3,7 +3,7 @@
 namespace app\modules\task\models;
 
 use Yii;
-use app\models\CommentInterface;
+use app\modules\comment\interfaces\CommentInterface;
 
 /**
  * This is the model class for table "task_comment".

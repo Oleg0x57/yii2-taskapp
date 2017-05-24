@@ -40,4 +40,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
 
     </div>
-<?php echo Yii::$container->get(\app\models\CommentWidgetInterface::class, [$task])->run(); ?>
+<?php echo Yii::$container->get(\app\modules\comment\interfaces\CommentWidgetInterface::class, [$task])->run(); ?>

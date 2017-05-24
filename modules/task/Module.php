@@ -3,9 +3,9 @@
 namespace app\modules\task;
 
 use Yii;
-use app\models\CommentInterface;
-use app\models\CommentSearchInterface;
-use app\models\CommentWidgetInterface;
+use app\modules\comment\interfaces\CommentInterface;
+use app\modules\comment\interfaces\CommentSearchInterface;
+use app\modules\comment\interfaces\CommentWidgetInterface;
 use app\modules\task\models\TaskComment;
 use app\modules\task\models\TaskCommentSearch;
 use app\modules\task\widgets\TaskCommentWidget;

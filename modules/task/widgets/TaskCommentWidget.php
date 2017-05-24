@@ -4,10 +4,10 @@ namespace app\modules\task\widgets;
 
 use Yii;
 use yii\base\Widget;
-use app\models\CommentInterface;
-use app\models\CommentableInterface;
-use app\models\CommentSearchInterface;
-use app\models\CommentWidgetInterface;
+use app\modules\comment\interfaces\CommentInterface;
+use app\modules\comment\interfaces\CommentableInterface;
+use app\modules\comment\interfaces\CommentSearchInterface;
+use app\modules\comment\interfaces\CommentWidgetInterface;
 
 class TaskCommentWidget extends Widget implements CommentWidgetInterface
 {

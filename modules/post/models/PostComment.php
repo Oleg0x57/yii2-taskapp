@@ -2,7 +2,7 @@
 
 namespace app\modules\post\models;
 
-use app\models\CommentInterface;
+use app\modules\comment\interfaces\CommentInterface;
 use Yii;
 
 /**

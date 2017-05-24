@@ -2,8 +2,8 @@
 
 namespace app\modules\post\models;
 
-use app\models\CommentableInterface;
-use app\models\CommentSearchInterface;
+use app\modules\comment\interfaces\CommentableInterface;
+use app\modules\comment\interfaces\CommentSearchInterface;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

@@ -6,9 +6,9 @@ use Yii;
 use app\modules\post\models\PostComment;
 use app\modules\post\models\PostCommentSearch;
 use app\modules\post\widgets\PostCommentWidget;
-use app\models\CommentInterface;
-use app\models\CommentSearchInterface;
-use app\models\CommentWidgetInterface;
+use app\modules\comment\interfaces\CommentInterface;
+use app\modules\comment\interfaces\CommentSearchInterface;
+use app\modules\comment\interfaces\CommentWidgetInterface;
 
 /**
  * post module definition class

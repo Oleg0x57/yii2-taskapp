@@ -1,7 +1,7 @@
 <?php
 
 namespace app\modules\task\models;
-use app\models\CommentableInterface;
+use app\modules\comment\interfaces\CommentableInterface;
 
 use Yii;
 
