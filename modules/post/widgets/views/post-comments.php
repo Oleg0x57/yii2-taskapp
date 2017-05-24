@@ -6,9 +6,9 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $newComment app\models\PostComment */
+/* @var $newComment app\modules\comment\interfaces\CommentInterface */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $commentSearchModel app\models\PostCommentSearch */
+/* @var $commentSearchModel app\modules\comment\interfaces\CommentSearchInterface */
 /* @var $commentDataProvider yii\data\ActiveDataProvider */
 
 ?>

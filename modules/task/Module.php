@@ -8,7 +8,7 @@ use app\modules\comment\interfaces\CommentSearchInterface;
 use app\modules\comment\interfaces\CommentWidgetInterface;
 use app\modules\task\models\TaskComment;
 use app\modules\task\models\TaskCommentSearch;
-use app\modules\task\widgets\TaskCommentWidget;
+use app\modules\comment\widgets\CommentWidget;
 
 /**
  * task module definition class
@@ -28,6 +28,6 @@ class Module extends \yii\base\Module
         parent::init();
         Yii::$container->set(CommentInterface::class, TaskComment::class);
         Yii::$container->set(CommentSearchInterface::class, TaskCommentSearch::class);
-        Yii::$container->set(CommentWidgetInterface::class, TaskCommentWidget::class);
+        Yii::$container->set(CommentWidgetInterface::class, CommentWidget::class);
     }
 }

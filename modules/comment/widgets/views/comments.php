@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 /* @var $commentDataProvider yii\data\ActiveDataProvider */
 
 ?>
-    <div class="task-comment-form">
+    <div class="comment-form">
         <?php Pjax::begin(['id' => 'new-comment']); ?>
         <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
 
@@ -25,7 +25,7 @@ use yii\widgets\Pjax;
         <?php ActiveForm::end(); ?>
         <?php Pjax::end(); ?>
     </div>
-    <div class="task-comment-index">
+    <div class="comment-index">
         <?php Pjax::begin(['id' => 'comments']); ?>
         <?= GridView::widget([
             'dataProvider' => $commentDataProvider,
