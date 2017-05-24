@@ -8,33 +8,12 @@ use app\modules\task\models\TaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\CommentInterface;
-use app\models\CommentSearchInterface;
-use app\models\CommentWidgetInterface;
-use app\modules\task\models\TaskComment;
-use app\modules\task\models\TaskCommentSearch;
-use app\modules\task\widgets\TaskCommentWidget;
 
 /**
  * TaskController implements the CRUD actions for Task model.
  */
 class TaskController extends Controller
 {
-    /**
-     * TODO: move DiC into bootstrap
-     * @param \yii\base\Action $action
-     * @return bool
-     * @throws \yii\web\BadRequestHttpException
-     */
-    public function beforeAction($action)
-    {
-        parent::beforeAction($action);
-        Yii::$container->set(CommentInterface::class, TaskComment::class);
-        Yii::$container->set(CommentSearchInterface::class, TaskCommentSearch::class);
-        Yii::$container->set(CommentWidgetInterface::class, TaskCommentWidget::class);
-        return true;
-    }
-
     /**
      * @inheritdoc
      */

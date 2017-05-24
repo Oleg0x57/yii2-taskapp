@@ -1,12 +1,19 @@
 <?php
 
 namespace app\modules\task;
-use yii\base\BootstrapInterface;
+
+use Yii;
+use app\models\CommentInterface;
+use app\models\CommentSearchInterface;
+use app\models\CommentWidgetInterface;
+use app\modules\task\models\TaskComment;
+use app\modules\task\models\TaskCommentSearch;
+use app\modules\task\widgets\TaskCommentWidget;
 
 /**
  * task module definition class
  */
-class Module extends \yii\base\Module implements BootstrapInterface
+class Module extends \yii\base\Module
 {
     /**
      * @inheritdoc
@@ -19,15 +26,8 @@ class Module extends \yii\base\Module implements BootstrapInterface
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
-    }
-
-    /**
-     * @param \yii\base\Application $application
-     */
-    public function bootstrap($application)
-    {
-
+        Yii::$container->set(CommentInterface::class, TaskComment::class);
+        Yii::$container->set(CommentSearchInterface::class, TaskCommentSearch::class);
+        Yii::$container->set(CommentWidgetInterface::class, TaskCommentWidget::class);
     }
 }

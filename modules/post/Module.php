@@ -2,12 +2,18 @@
 
 namespace app\modules\post;
 
-use yii\base\BootstrapInterface;
+use Yii;
+use app\modules\post\models\PostComment;
+use app\modules\post\models\PostCommentSearch;
+use app\modules\post\widgets\PostCommentWidget;
+use app\models\CommentInterface;
+use app\models\CommentSearchInterface;
+use app\models\CommentWidgetInterface;
 
 /**
  * post module definition class
  */
-class Module extends \yii\base\Module implements BootstrapInterface
+class Module extends \yii\base\Module
 {
     /**
      * @inheritdoc
@@ -20,15 +26,8 @@ class Module extends \yii\base\Module implements BootstrapInterface
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
-    }
-
-    /**
-     * @param \yii\base\Application $application
-     */
-    public function bootstrap($application)
-    {
-
+        Yii::$container->set(CommentInterface::class, PostComment::class);
+        Yii::$container->set(CommentSearchInterface::class, PostCommentSearch::class);
+        Yii::$container->set(CommentWidgetInterface::class, PostCommentWidget::class);
     }
 }
