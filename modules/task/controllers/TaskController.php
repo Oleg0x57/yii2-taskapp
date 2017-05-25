@@ -5,6 +5,7 @@ namespace app\modules\task\controllers;
 use Yii;
 use app\modules\task\models\Task;
 use app\modules\task\models\TaskSearch;
+use app\modules\comment\interfaces\CommentInterface;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,12 +66,15 @@ class TaskController extends Controller
     public function actionCreate()
     {
         $model = new Task();
-
+        $comment = Yii::$container->get(CommentInterface::class);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $comment->load(Yii::$app->request->post());
+            $model->addComment($comment);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'comment' => $comment,
             ]);
         }
     }
