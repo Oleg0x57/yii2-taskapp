@@ -6,11 +6,11 @@ use Yii;
 use yii\base\Widget;
 use app\modules\comment\interfaces\CommentInterface;
 use app\modules\comment\interfaces\CommentableInterface;
-use app\modules\comment\interfaces\CommentSearchInterface;
-use app\modules\comment\interfaces\CommentWidgetInterface;
+use app\modules\comment\interfaces\FormCommentWidgetInterface;
+use yii\widgets\ActiveForm;
 
 
-class CommentWidget extends Widget implements CommentWidgetInterface
+class FormCommentWidget extends Widget implements FormCommentWidgetInterface
 {
     /**
      * @var CommentableInterface
@@ -18,14 +18,14 @@ class CommentWidget extends Widget implements CommentWidgetInterface
     protected $entity;
 
     /**
+     * @var ActiveForm
+     */
+    protected $form;
+
+    /**
      * @var CommentInterface
      */
     protected $newComment;
-
-    /**
-     * @var CommentSearchInterface
-     */
-    protected $commentSearchModel;
 
     /**
      * @var string
@@ -39,22 +39,22 @@ class CommentWidget extends Widget implements CommentWidgetInterface
 
     /**
      * @param CommentableInterface $entity
+     * @param ActiveForm $form
+     * @throws \yii\base\InvalidConfigException
      */
-    public function __construct(CommentableInterface $entity)
+    public function __construct(CommentableInterface $entity, ActiveForm $form)
     {
         $this->entity = $entity;
+        $this->form = $form;
         $this->newComment = Yii::$container->get(CommentInterface::class);
-        $this->commentSearchModel = Yii::$container->get(CommentSearchInterface::class, [$entity]);
-        $commentDataProvider = $this->commentSearchModel->search(Yii::$app->request->queryParams);
         if ($this->newComment->load(Yii::$app->request->post()) && $this->entity->addComment($this->newComment)) {
             $this->newComment = Yii::$container->get(CommentInterface::class);
         }
         $this->params = [
             'newComment' => $this->newComment,
-            'commentSearchModel' => $this->commentSearchModel,
-            'commentDataProvider' => $commentDataProvider,
+            'form' => $this->form,
         ];
-        $this->view = 'comments';
+        $this->view = 'form-comment';
     }
 
     /**

@@ -66,15 +66,11 @@ class TaskController extends Controller
     public function actionCreate()
     {
         $model = new Task();
-        $comment = Yii::$container->get(CommentInterface::class);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $comment->load(Yii::$app->request->post());
-            $model->addComment($comment);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'comment' => $comment,
             ]);
         }
     }
